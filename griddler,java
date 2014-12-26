@@ -1,0 +1,1162 @@
+/*
+GRIDDLER SOLVER BY CHEOL LEE AND DANIEL CARBALLAL
+RUN AS IS TO SEE IT IN ACTION!
+
+USE AND IMPROVE ON AS YOU WISH. LATER EDITIONS MAY COME.
+*/
+
+
+package griddlersolver;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+public class main {
+	static int rowsize;
+	static int columnsize;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader console = new BufferedReader( new InputStreamReader(System.in));
+		System.out.println("Row size: ");
+		rowsize =  Integer.parseInt(console.readLine());
+		if(rowsize == 1000){
+			rowsize = 5;
+			columnsize = 5;
+			int[][] rowhints = {{2},{1,1},{1,1},{2,1},{2}};
+			int[][] columnhints = {{2},{5},{1},{3},{}};
+			int [][] solution = griddlesolver(rowhints,columnhints);
+			griddleprint(solution);
+			return;
+		}
+		if(rowsize == 1001){
+			rowsize = 10;
+			columnsize = 10;
+			int[][] rowhints = {{4},{1,5},{7},{4},{3,5},{3,5},{10},{10},{2,6},{3,4}};
+			int[][] columnhints = {{2,1},{1,6},{1,1,6},{3,4},{3,3},{10},{9},{9},{8},{5}};
+			int [][] solution = griddlesolver(rowhints,columnhints);
+			griddleprint(solution);
+			return;
+		}
+		if(rowsize == 1002)
+		{
+			rowsize = 10;
+			columnsize = 10;
+			int[][] rowhints = {{2,4,2},{1,4,1},{1,4,1},{2,2,2},{6},{10},{1,4,1},{6},{1,1,1,1},{3,3}};
+			int[][] columnhints = {{1,2,2},{4,1,1},{3,3},{3,4},{8},{8},{3,4},{3,3},{4,1,1},{1,2,2}};
+			int [][] solution = griddlesolver(rowhints,columnhints);
+			griddleprint(solution);
+			return;
+		}
+		if(rowsize == 1003)
+		{
+			rowsize = 10;
+			columnsize = 10;
+			int[][] rowhints = {{2,2},{2,4},{2,3,1},{1},{1,1,3},{3,3},{3,1,2},{2,1,1},{3,1},{1}};
+			int[][] columnhints = {{2},{2,2},{4,2},{1,1,1},{1,1,2},{2,3},{3,1},{2,2,3},{1,3},{1,3}};
+			int [][] solution = griddlesolver(rowhints,columnhints);
+			griddleprint(solution);
+			return;
+		}
+		if(rowsize == 1004)
+		{
+			rowsize = 10;
+			columnsize = 10;
+			int[][] rowhints = {{2},{1,1},{1,1},{2,2},{1,1},{3,1},{3,1},{8},{2},{2}};
+			int[][] columnhints = {{0},{3},{5},{2,3},{2,3},{1,3},{3,1},{2,1},{3},{0}};
+			int [][] solution = griddlesolver(rowhints,columnhints);
+			griddleprint(solution);
+			return;
+		}
+		if(rowsize == 1005)
+		{
+			rowsize = 15;
+			columnsize = 15;
+			int[][] rowhints = {{6},{1,1},{1,1},{5,1},{1,1,1},{1,3,3,1},{1,1},{1,1},{15},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{15},{1,1}};
+			int[][] columnhints = {{10},{1,1},{6},{1,1},{6},{1,1},{1,6},{3,1,1},{1,1,6},{4,1,1},{1,1,1,6},{1,3,1,1},{1,1,6},{1,1,1},{15}};
+			int[][] solution = griddlesolver(rowhints,columnhints);
+			griddleprint(solution);
+			return;
+		}
+		if(rowsize == 1006)
+		{
+			rowsize = 25;
+			columnsize = 25;
+			int[][] rowhints = {{1,3,2,2,1,2,2,3,1},{2,1,2,1,1,1,2,1,2},{3,1,2,1,2,1,3},{1,1,1,1,1,1,1,1,1,1,1},{2,1,2,1,1,1,2,1,2},{2,1,1,1,1,1,1,1,2},{1,1,1,1,5,1,1,1,1},{6,9,6},{2,13,2},{1,2,3,3,3,2,1},{2,4,3,4,2},{13},{25},{3,5,3},{2,5,5,2},{1,2,4,4,2,1},{2,13,2},{6,9,6},{1,1,1,1,5,1,1,1,1},{2,1,1,1,1,1,1,1,2},{2,1,2,1,1,1,2,1,2},{1,1,1,1,1,1,1,1,1,1,1},{3,1,2,1,2,1,3},{2,1,2,1,1,1,2,1,2},{1,3,2,2,1,2,2,3,1,}};
+			int[][] columnhints = {{1,3,2,2,1,2,2,3,1},{2,1,2,1,1,1,2,1,2},{3,1,2,1,2,1,3},{1,1,1,1,1,1,1,1,1,1,1},{2,1,2,1,1,1,2,1,2},{2,1,1,1,1,1,1,1,2},{1,1,1,1,5,1,1,1,1},{6,9,6},{2,13,2},{1,2,3,2,4,2,1},{2,4,3,5,2},{8,3},{14,9},{8,3},{2,4,3,5,2},{1,2,3,2,4,2,1},{2,13,2},{6,9,6},{1,1,1,1,5,1,1,1,1},{2,1,1,1,1,1,1,1,2},{2,1,2,1,1,1,2,1,2},{1,1,1,1,1,1,1,1,1,1,1},{3,1,2,1,2,1,3},{2,1,2,1,1,1,2,1,2},{1,3,2,2,1,2,2,3,1}};
+			System.out.println(rowhints.length);
+			System.out.println(columnhints.length);
+			int[][] solution = griddlesolver(rowhints, columnhints);
+			griddleprint(solution);
+			return;
+		}
+		if(rowsize == 1007)
+		{
+			rowsize = 15;
+			columnsize = 20;
+			int[][] rowhints = { {1,1,3,1},{1,7,1,1},{1,2,1,1},{8,3,4},{5,3,2,1,3},{4,2,1,1,1},{3,1,1,1,1},{1,1,2,1},{1,5,1,1,1,1},{1,1,1,3,1,1},{1,2,2,1,1,1},{1,1,1,2,1},{2,2,1,1,1},{1,2,6},{1,1,8,2,1}     };
+			int[][] columnhints = { {1,5,1,1},{1,4,1,1,1},{1,5,1,1,1},{3,1,1,3},{2,1,1,1},{1,1,2,1},{1,3,1,1,1},{1,3,3,2},{3,1,2},{2,2},{3,2},{4,1,2},{1,2,1,3},{1,6,1},{2,2,1},{1,2,1,1,1,1},{3,2,1,1},{3,1,1,1},{2,1,1,1,1},{3,1,1} };
+			System.out.println(rowhints.length);
+			System.out.println(columnhints.length);
+			int[][] solution = griddlesolver(rowhints, columnhints);
+			griddleprint(solution);
+			return;
+		}
+		System.out.println();
+		System.out.println("Column size: ");
+		columnsize = Integer.parseInt(console.readLine());
+		System.out.println();
+		
+		int[][] puzzle = new int[rowsize][columnsize];
+		int[][] rowhints = new int [rowsize][];
+		int[][] columnhints = new int[columnsize][];
+		
+		for(int i = 0; i < rowsize; i++){//Row initializer
+			System.out.println("Hint for line " + (i+1)+ ": ");
+			String line = (console.readLine());
+			int spaceCount = 0;
+			char[] temp = line.toCharArray();
+			for (char c : temp) {
+			    if (c == ' ') {
+			         spaceCount++;
+			    }
+			}
+			rowhints[i] = new int[spaceCount + 1];
+			int currentIndex = 0;
+			int lastIndex = 0;
+			String number;
+			int n;
+			System.out.println(spaceCount + 1);
+			for(int j = 0; j < rowhints[i].length; j++){
+				currentIndex = line.indexOf(" ",lastIndex + 1); //Should never return 0
+				if(currentIndex == -1) currentIndex = line.length();
+				number = line.substring(lastIndex,currentIndex);
+				number = number.replaceAll("\\s", "");
+				//System.out.println(lastIndex + " " + currentIndex);
+				n = Integer.parseInt(number);
+				rowhints[i][j] = n;
+				lastIndex = currentIndex;
+			}
+		}
+		
+		//Column initializer
+		for(int i = 0; i < columnsize; i++){//Row initializer
+			System.out.println("Hint for line " + (i+1) + ":");
+			String line = console.readLine();
+			int spaceCount = 0;
+			for (char c : line.toCharArray()) {
+			    if (c == ' ') {
+			         spaceCount++;
+			    }
+			}
+			columnhints[i] = new int[spaceCount + 1];
+			int currentIndex = 0;
+			int lastIndex = 0;
+			String number;
+			int n;
+			for(int j = 0; j < columnhints[i].length; j++){
+				currentIndex = line.indexOf(" ",lastIndex + 1); //Should never return 0
+				if(currentIndex == -1) currentIndex = line.length();
+				number = line.substring(lastIndex,currentIndex);
+				number = number.replaceAll("\\s", "");
+				//System.out.println(lastIndex + " " + currentIndex);
+				n = Integer.parseInt(number);
+				columnhints[i][j] = n;
+				lastIndex = currentIndex;
+			}
+		}
+		//INITIALIZER
+		for(int i = 0; i < puzzle.length; i ++){
+			for(int j = 0; j < puzzle[0].length; j++){
+				puzzle[i][j] = 0;
+			}
+		}
+		puzzle = griddlesolver(rowhints, columnhints);
+		griddleprint(puzzle);
+	}
+	
+static int[][] griddlesolver(int[][] rowhints, int[][] columnhints){
+
+	int[][] solution = new int[rowhints.length][columnhints.length];
+	
+	boolean debug = true;
+
+	//trick1 works only once
+	for(int i = 0; i < rowsize; i ++)
+		trick1(true,i,rowhints,columnhints,solution);
+	for(int j = 0; j < columnsize; j++)
+		trick1(false,j,rowhints,columnhints,solution);
+	griddledebug(debug, solution, "trick1");
+
+	int repetition = 5;
+	
+	for (int c1=0; c1<repetition; c1++)
+	{
+		trick2(rowhints,columnhints,solution);
+		griddledebug(debug, solution, "trick2");
+		
+		blank1(rowhints,columnhints,solution);
+		griddledebug(debug, solution, "blank1");
+		
+		blank2(rowhints, columnhints, solution);
+		griddledebug(debug, solution, "blank2");
+		
+		blank3(rowhints, columnhints, solution);
+		griddledebug(debug, solution, "blank3");
+
+		for(int i = 0; i < rowsize; i ++){
+			trick3(true,i,rowhints,columnhints,solution);
+			blank4(true,i,rowhints,columnhints,solution);
+		}
+		for(int j = 0; j < columnsize; j++){
+			trick3(false,j,rowhints,columnhints,solution);
+			blank4(false,j,rowhints,columnhints,solution);
+		}
+		griddledebug(debug, solution, "trick3");
+		if (griddlecheck(solution))
+			break;
+	}
+	System.out.println("System currently trying brute force method");
+	int[] zeros = returnZeros(solution);
+    while(!checkIfCorrect(rowhints,columnhints,solution)){
+    	//System.out.println("Try number " + counter + " should get answer once every 2^" + zeros.length + " tries");
+    	randomlyGuess(solution,zeros);
+    }
+	return solution;
+}
+
+static void griddledebug(boolean debug, int[][] puzzle, String index)
+{
+	if (debug)
+	{
+		System.out.println("Applying " + index);
+		griddleprint(puzzle);
+		System.out.println();
+	}
+}
+
+static void trick1 (boolean solvingrow, int numnth, int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	//if there is only 1 chunk of unknown, fill the definitely filled blanks.
+	//solvingrow: are we solving for row?
+	//numnth: nth row/column
+	
+	int lengthblank;
+	int[] hint;
+	int sumhint = 0;
+	
+	hint = hintPick(solvingrow, numnth, rowhints, columnhints);
+	int[][] chunk0 = chunkCounter(solvingrow, numnth, rowhints, columnhints, puzzle);
+	
+	if (chunk0.length > 1 || chunk0.length == 0)	//abort if there is no available chunk or more than 2 chunks
+		return;
+	
+	lengthblank = chunk0[0][1];
+			
+	for (int c1=0; c1<hint.length; c1++)
+	{
+		sumhint += hint[c1];
+	}
+	
+	for (int c1=0; c1<hint.length; c1++)
+	{
+		int lengthmargin = lengthblank - sumhint + hint[c1] -hint.length +1;
+		
+		if (lengthmargin < 2*hint[c1])
+		{
+			int lengthfilled = 2*hint[c1] - lengthmargin;
+			int lengthunknown = lengthmargin - hint[c1];
+			
+			int position = chunk0[0][0];
+			for (int c2=0; c2<c1; c2++)
+			{
+				position += hint[c2] +1;
+			}				
+			position += lengthunknown;
+			
+			if (solvingrow)
+			{
+				fillRow(numnth, position, lengthfilled, puzzle);
+			}
+			else
+			{
+				fillColumn(numnth, position, lengthfilled, puzzle);
+			}
+		}
+	}
+}
+
+static void trick2 (int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	//side trick. use multiple times
+	
+	for (int c1=0; c1<rowsize; c1++)
+	{
+		if (rowhints[c1].length != 0)
+		{
+			int blankbot = trick2blankcounter(true, c1, true, puzzle);
+			int blanktop = trick2blankcounter(true, c1, false, puzzle);
+			
+			for (int c2=0; c2 < rowhints[c1][0]-1; c2++)
+			{
+				if (puzzle[c1][c2+blankbot] == 2 && rowhints[c1][0] >= 2+c2)
+					fillRow(c1, c2+blankbot, rowhints[c1][0]-c2, puzzle);
+	
+				if (puzzle[c1][columnsize-1-c2-blanktop] == 2 && rowhints[c1][rowhints[c1].length-1] >= 2+c2)
+					fillRow(c1, columnsize-rowhints[c1][rowhints[c1].length-1]-blanktop, rowhints[c1][rowhints[c1].length-1]-1-c2, puzzle);
+			}
+		}
+	}
+	
+	for (int c1=0; c1<columnsize; c1++)
+	{
+		if (columnhints[c1].length != 0)
+		{
+			int blankbot = trick2blankcounter(false, c1, true, puzzle);
+			int blanktop = trick2blankcounter(false, c1, false, puzzle);
+			
+			for (int c2=0; c2 < columnhints[c1][0]-1; c2++)
+			{
+				if (puzzle[c2+blankbot][c1] == 2 && columnhints[c1][0] >= 2+c2)
+					fillColumn(c1, c2+blankbot, columnhints[c1][0]-c2, puzzle);
+	
+				if (puzzle[rowsize-1-c2-blanktop][c1] == 2 && columnhints[c1][columnhints[c1].length-1] >= 2+c2)
+					fillColumn(c1, rowsize-columnhints[c1][columnhints[c1].length-1]-blanktop, columnhints[c1][columnhints[c1].length-1]-1-c2, puzzle);
+			}
+		}
+	}
+
+/*	
+	for (int c1=0; c1<columnsize; c1++)
+	{
+		if (columnhints[c1].length!=0)
+		{
+			for (int c2=0; c2<columnhints[c1][0]-1; c2++)
+			{
+				if (puzzle[c2][c1] == 2 && columnhints[c1][0] >= 2+c2)
+					fillColumn(c1, c2, columnhints[c1][0]-c2, puzzle);
+	
+				if (puzzle[rowsize-1-c2][c1] == 2 && columnhints[c1][columnhints[c1].length-1] >= 2+c2)
+					fillColumn(c1, rowsize-columnhints[c1][columnhints[c1].length-1], columnhints[c1][columnhints[c1].length-1]-1-c2, puzzle);
+			}
+		}
+	}*/
+}
+
+static int trick2blankcounter (boolean solvingrow, int numnth, boolean bottomside, int[][] puzzle)
+{
+	//returns the number of blanks counted from the bottom/top of the row/column
+	//solvingrow: are we solving for row?
+	//numnth: index of the row/column
+	//bottomside: lower index side?
+
+	int numblank = 0;
+	int maxblank = 0;
+	int i1 = 0;
+	int i2 = 0;
+	
+	if (solvingrow)
+	{
+		i1 = numnth;
+		maxblank = columnsize;
+		
+		if (!bottomside)
+			i2 = columnsize-1;
+	}
+	else
+	{
+		i2=numnth;
+		maxblank = rowsize;
+		
+		if (!bottomside)
+			i1 = rowsize-1;
+	}
+	
+	//System.out.println(i1 + " " + i2 + " " + puzzle[i1][i2]);
+	while (numblank<maxblank)
+	{
+		
+		if (puzzle[i1][i2] == 1)
+			numblank++;
+		else
+			break;
+
+		//System.out.println(i1 + " " + i2 + " " + puzzle[i1][i2] + " / numblank: " + numblank);
+
+		if (solvingrow)
+		{
+			if (bottomside)
+				i2++;
+			else
+				i2--;
+		}
+		else
+		{
+			if (bottomside)
+				i1++;
+			else
+				i1--;
+		}
+	}
+	
+	return numblank;
+}
+
+static void trick3 (boolean solvingrow, int numnth, int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	//if there are chunk of unknowns that a hint (and other hints larger than itself) can fit in, fill it (using the smallest possible hint). Use multiple times
+	
+	int[][] chunk0 = chunkCounter(solvingrow, numnth, rowhints, columnhints, puzzle); //[][0] is place, [][1] is size
+	boolean[] chunk2 = new boolean[chunk0.length]; // unknowns left for that chunk... will use later?
+
+	if (chunk0.length == 1)	//if all the tile is available, trick1 handled it so get the hell out of here
+	{
+		int maxsize = 0;
+		
+		if (solvingrow)
+			maxsize = rowsize;
+		else
+			maxsize = columnsize;
+			
+		if (chunk0[0][1] == maxsize)
+			return;
+	}
+	
+	int[] hint = hintPick(solvingrow, numnth, rowhints, columnhints);
+	int[][] hintsorted = sortHint(hint);
+	
+	int maxindex = 0;
+	int numtile = 0;
+	
+	if (solvingrow)
+		numtile = columnsize;
+	else
+		numtile = rowsize;
+	
+	if (numtile%2 == 0)
+		maxindex = numtile/2;
+	else
+		maxindex = (numtile+1)/2;	
+	
+	
+	for (int c1=0; c1<hintsorted.length; c1++)	//go through all the sorted hints
+	{
+		int numpossible = 0;
+		int[] indexpossible = new int[maxindex];
+		boolean stackedchunk = false;
+		
+		for (int c2=0; c2<chunk0.length; c2++)	//compare each hint to all the chunks
+		{
+			if (chunk0[c2][1] >= hintsorted[c1][0]) //can it fit into the chunk?
+			{
+				if (chunk0[c2][1] >= (2*hintsorted[c1][0]+1))	//is it only for 1 hint?
+				{
+					stackedchunk = true;
+					numpossible = 0;
+					break;
+					//this part can be upgraded.. ex)5, 3 chunk with hint 2, 2, 2
+				}
+				else
+				{
+					indexpossible[numpossible] = c2;
+					numpossible++;
+				}
+			}
+		}
+		
+		//System.out.println("sovlingrow(" + solvingrow + "), numnth(" + numnth + "), hint(" + c1 + "), hintsize("+hintsorted[c1][0]+"), numpossible(" + numpossible + "), stackedchunk(" + stackedchunk + ")");
+		
+		if (  (!stackedchunk) && (numpossible == (c1+1))  )
+		{ 
+			//System.out.println("	filling!");
+			int[][] hintindexorder = sortHintIndexOrder(hintsorted, c1+1);
+			
+			for (int c3=0; c3<numpossible; c3++)
+			{
+				int hintsize = hintindexorder[c3][0];
+				int lengthfill = 2*hintsize - chunk0[indexpossible[c3]][1];
+				int lengthmargin = chunk0[indexpossible[c3]][1] - hintsize;
+				
+				//System.out.println("	chunkposition("+c3+"), lengthfill("+lengthfill+"), lengthmargin("+lengthmargin+"), hintindex(" +(c1-numpossible+1+c3)+"), hintsize("+hintsize+")");
+				if (lengthfill >= 1)
+				{
+					if (solvingrow)
+						fillRow(numnth, chunk0[indexpossible[c3]][0] + lengthmargin, lengthfill, puzzle);
+					else
+						fillColumn(numnth, chunk0[indexpossible[c3]][0] + lengthmargin, lengthfill, puzzle);
+				}
+			}
+		}
+	}
+}
+
+static void blank1(int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	for (int c1=0; c1<rowsize; c1++)
+	{
+		int numfilled = 0;
+		int sumhint = 0;
+
+		for (int c2=0; c2<rowhints[c1].length; c2++)
+		{
+			sumhint += rowhints[c1][c2];
+		}
+		
+		for (int c2=0; c2<columnsize; c2++)
+		{
+			if (puzzle[c1][c2] == 2)
+			{
+				numfilled += 1;
+			}
+		}
+		
+		if (numfilled == sumhint)
+		{
+			for (int c2=0; c2<columnsize; c2++)
+			{
+				if (puzzle[c1][c2] != 2)
+				{
+					puzzle[c1][c2] = 1;
+				}
+			}
+		}
+	}
+	
+	for (int c1=0; c1<columnsize; c1++)
+	{
+		int numfilled = 0;
+		int sumhint = 0;
+		
+		for (int c2=0; c2<columnhints[c1].length; c2++)
+		{
+			sumhint += columnhints[c1][c2];
+		}
+		
+		for (int c2=0; c2<rowsize; c2++)
+		{
+			if (puzzle[c2][c1] == 2)
+			{
+				numfilled += 1;
+			}
+		}
+		
+		if (numfilled == sumhint)
+		{
+			for (int c2=0; c2<columnsize; c2++)
+			{
+				if (puzzle[c2][c1] != 2)
+				{
+					puzzle[c2][c1] = 1;
+				}
+			}
+		}
+	}
+}
+
+static void blank2(int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	//Starting from the largest hint, block both ends with blank if there is a chunk of filled that matches in the size.
+	//use multiple times
+	
+	for (int c1=0; c1<rowsize; c1++)
+	{
+		int[] hint = hintPick(true, c1, rowhints, columnhints);
+		int[][] hintsorted = sortHint(hint);
+		int[][] chunkfilled = fillCounter(true, c1, rowhints, columnhints, puzzle);
+		
+		int nummatch = 0;
+		int hintprev = -1;
+
+		for (int c2=0; c2<hintsorted.length; c2++)
+		{
+			if (hintprev == hintsorted[c2][0])
+				break;
+			else
+				hintprev = hintsorted[c2][0];
+			
+			for (int c3=0; c3<chunkfilled.length; c3++)
+			{
+				if (hintsorted[c2][0] == chunkfilled[c3][1])
+				{
+					if (nummatch >= c2)
+					{
+						if (chunkfilled[c3][0] >= 1)
+							puzzle[c1][chunkfilled[c3][0]-1] = 1;
+						if (chunkfilled[c3][0]+chunkfilled[c3][1] <= columnsize-1)
+							puzzle[c1][chunkfilled[c3][0]+chunkfilled[c3][1]] = 1;
+
+						nummatch++;
+					}
+				}
+			}
+		}
+	}
+	
+	
+	for (int c1=0; c1<columnsize; c1++)
+	{
+		int[] hint = hintPick(false, c1, rowhints, columnhints);
+		int[][] hintsorted = sortHint(hint);
+		int[][] chunkfilled = fillCounter(false, c1, rowhints, columnhints, puzzle);
+		
+		int nummatch = 0;
+		int hintprev = -1;
+
+		for (int c2=0; c2<hintsorted.length; c2++)
+		{
+			if (hintprev == hintsorted[c2][0])
+				break;
+			else
+				hintprev = hintsorted[c2][0];
+			
+			for (int c3=0; c3<chunkfilled.length; c3++)
+			{
+				if (hintsorted[c2][0] == chunkfilled[c3][1])
+				{
+					if (nummatch >= c2)
+					{
+						//System.out.println("for line " + (c1+1) + ", " + (hintsorted[c2][1]+1) + "th hint: " + hintsorted[c2][0] + " / chunk size: " + chunkfilled[c3][1]);
+
+						if (chunkfilled[c3][0] >= 1)
+							puzzle[chunkfilled[c3][0]-1][c1] = 1;
+						if (chunkfilled[c3][0]+chunkfilled[c3][1] <= rowsize-1)
+							puzzle[chunkfilled[c3][0]+chunkfilled[c3][1]][c1] = 1;
+
+						nummatch++;
+					}
+				}
+			}
+		}
+	}
+}
+
+static void blank3 (int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	//there is only 1 hint, blank everything before/after it.
+	for (int c1=0; c1<rowsize; c1++)
+	{
+		
+		int[] hint = hintPick(true, c1, rowhints, columnhints);
+		int[][] chunk2 = fillCounter(true, c1, rowhints, columnhints, puzzle);
+		
+		if ((hint.length == 1) && (chunk2.length == 1))
+		{
+			int lengthmargin = hint[0] - chunk2[0][1];
+			
+			blankRow(c1, 0, chunk2[0][0] - lengthmargin, puzzle);
+			blankRow(c1, chunk2[0][0]+chunk2[0][1]+lengthmargin, columnsize - chunk2[0][0] - chunk2[0][1] - lengthmargin, puzzle);
+		}
+	}
+	
+	for (int c1=0; c1<columnsize; c1++)
+	{
+		
+		int[] hint = hintPick(false, c1, rowhints, columnhints);
+		int[][] chunk2 = fillCounter(false, c1, rowhints, columnhints, puzzle);
+		
+		if ((hint.length == 1) && (chunk2.length == 1))
+		{
+			int lengthmargin = hint[0] - chunk2[0][1];
+			
+			blankColumn(c1, 0, chunk2[0][0] - lengthmargin, puzzle);
+			//System.out.println((c1+1) + " " + (chunk2[0][0]+chunk2[0][1]+1) + " " + (rowsize - chunk2[0][0] - chunk2[0][1] - lengthmargin));
+			blankColumn(c1, chunk2[0][0]+chunk2[0][1]+lengthmargin, rowsize - chunk2[0][0] - chunk2[0][1] - lengthmargin, puzzle);
+		}
+	}
+}
+
+static void blank4(boolean solvingrow, int numnth, int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	//find first unknown chunk, if it is impossible to fit the first hint before it, blank it.
+	//repeat the process backward
+	
+	int[] hint = hintPick(solvingrow, numnth, rowhints, columnhints);
+	int[][] chunk0 = chunkCounter(solvingrow, numnth, rowhints, columnhints, puzzle);
+	
+	for (int c1=0; c1<chunk0.length; c1++)
+	{
+		if (chunk0[c1][1] < hint[0])
+		{	
+			if (solvingrow)
+				blankRow(numnth, chunk0[c1][0], chunk0[c1][1], puzzle);
+			else
+				blankColumn(numnth, chunk0[c1][0], chunk0[c1][1], puzzle);
+		}
+		else
+		{
+			break;
+		}
+	}
+	for (int c1=chunk0.length-1; c1 >= 0; c1--)
+	{
+		if (chunk0[c1][1] < hint[hint.length-1])
+		{			
+			if (solvingrow)
+				blankRow(numnth, chunk0[c1][0], chunk0[c1][1], puzzle);
+			else
+				blankColumn(numnth, chunk0[c1][0], chunk0[c1][1], puzzle);
+		}
+		else
+		{
+			break;
+		}
+	}
+	
+}
+
+static void fillRow (int numnth, int startposition, int numfill, int [][] puzzle)
+{
+	//see changeTile
+	
+	changeTile(true, true, numnth, startposition, numfill, puzzle);
+}
+
+static void fillColumn (int numnth, int startposition, int numfill, int [][] puzzle)
+{
+	//see changeTile
+	
+	changeTile(true, false, numnth, startposition, numfill, puzzle);
+}
+
+static void blankRow (int numnth, int startposition, int numfill, int [][] puzzle)
+{
+	//see changeTile
+	
+	changeTile(false, true, numnth, startposition, numfill, puzzle);
+}
+
+static void blankColumn (int numnth, int startposition, int numfill, int [][] puzzle)
+{
+	//see changeTile
+	
+	changeTile(false, false, numnth, startposition, numfill, puzzle);
+}
+
+static void changeTile (boolean fill, boolean solvingrow, int numnth, int startposition, int numfill, int [][] puzzle)
+{
+	//fill: fill / blank
+	//solvingrow: change row / change column
+	//numnth: change nth row/column
+	//startposition: start changing from this tile
+	//numfill: change this many tiles
+
+	int i1 = 0;
+	int i2 = 0;
+	int changetype = 0;
+	
+	if (solvingrow)
+	{
+		i1 = numnth;
+		i2 = startposition;
+	}
+	else
+	{
+		i1 = startposition;
+		i2 = numnth;
+	}
+	
+	if (fill)
+		changetype = 2;
+	else
+		changetype = 1;
+	
+	for (int c1=0; c1<numfill; c1++)
+	{
+		puzzle[i1][i2] = changetype;
+		
+		if (solvingrow)
+			i2++;
+		else
+			i1++;
+	}
+}
+
+static int[] hintPick (boolean solvingrow, int numnth, int[][] rowhints, int[][] columnhints)
+{
+	//pick the nth hint and return it.
+	int[] hintret;
+	
+	if (solvingrow)
+	{
+		hintret = rowhints[numnth];
+	}
+	else
+	{
+		hintret = columnhints[numnth];
+	}
+	
+	return hintret;
+}
+
+static int[][] sortHint(int[] hint)
+{
+	//sortHint in descending order and return
+	//ret[][0]: value of the hint
+	//ret[][1]: order of the hint
+	
+	int[][] ret = new int[hint.length][2];
+	
+	for (int c1=0; c1<hint.length; c1++)
+	{
+		ret[c1][0] = hint[c1];
+		ret[c1][1] = c1;
+	}
+	
+	for (int c1=0; c1<hint.length-1; c1++)
+	{
+		for (int c2=0; c2<hint.length-1-c1; c2++)
+		{
+			if (ret[c2][0] < ret[c2+1][0])
+			{
+				int temp0 = ret[c2+1][0];
+				int temp1 = ret[c2+1][1];
+				ret[c2+1][0] = ret[c2][0];
+				ret[c2+1][1] = ret[c2][1];
+				ret[c2][0] = temp0;
+				ret[c2][1] = temp1;
+			}
+		}
+	}
+	
+	return ret;
+}
+
+static int[][] sortHintIndexOrder(int[][] hint, int num)
+{
+	//pick top n largest hints and sort them back in original index order
+	//ret[][0]: value of the hint
+	//ret[][1]: index of the hint
+	
+	int[][] ret = new int[num][2];
+	
+	for (int c1=0; c1<num; c1++)
+	{
+		ret[c1][0] = hint[c1][0];
+		ret[c1][1] = hint[c1][1];
+	}
+	
+	for (int c1=0; c1<num; c1++)
+	{
+		for (int c2=0; c2<num-1-c1; c2++)
+		{
+			if (ret[c2][1] > ret[c2+1][1])
+			{
+				int temp0 = ret[c2+1][0];
+				int temp1 = ret[c2+1][1];
+				ret[c2+1][0] = ret[c2][0];
+				ret[c2+1][1] = ret[c2][1];
+				ret[c2][0] = temp0;
+				ret[c2][1] = temp1;
+			}
+		}
+	}
+	
+	return ret;
+}
+
+
+static int[][] chunkCounter(boolean solvingrow, int numnth, int[][] rowhints, int[][] columnhints, int[][] puzzle)
+{
+	//count the starting position and number of chunks that is separated by blanks
+	//ret[][0] is the starting position of the chunk, starting from 0
+	//ret[][1] is the size of the chunk
+
+	int maxsize = 0;
+	int numtile = 0;
+	
+	if (solvingrow)
+		numtile = columnsize;
+	else
+		numtile = rowsize;
+	
+	if (numtile%2 == 0)
+		maxsize = numtile/2;
+	else
+		maxsize = (numtile+1)/2;
+	
+	int[][] temp = new int[maxsize][2];
+	
+	int i1=0;
+	int i2=0;
+	
+	boolean chunkstart = true;	//is this the first tile of the chunk?
+	boolean wasblank = true; //was the previous tile blank? consider -1th imaginary tile as blank
+	int count = 0;	//size of the chunk
+	int chunknum = 0;	//index of the chunk
+	
+	if (solvingrow)
+		i1 = numnth;
+	else
+		i2 = numnth;
+		
+	for (int c1=0; c1<numtile; c1++)
+	{
+		
+		if (puzzle[i1][i2] != 1)	//if the tile is not blank, increase count
+		{
+			count++;
+			
+			if (chunkstart)	//if this is the first tile of the chunk, register its position
+			{
+				temp[chunknum][0] = c1;
+				chunkstart = false;
+				wasblank = false;
+			}
+		}
+		else	//if the tile is blank, reset parameters
+		{	
+			if (!wasblank)	//if this is the first blank encountered, register the size of the chunk
+			{
+				temp[chunknum][1] = count;
+				chunknum++;
+			}
+
+			count = 0;
+			chunkstart = true;
+			wasblank = true;
+		}
+		
+		if (c1 == numtile-1)	//pack up if this is the last tile
+			temp[chunknum][1] = count;
+		
+		if(solvingrow)	//moving on to the next tile
+			i2++;
+		else
+			i1++;
+	}
+	
+	
+
+	//copy temp into ret that has proper length
+	int retsize = 0;
+	
+	for (int c1=0; c1<temp.length; c1++)
+	{
+		if (temp[c1][1] != 0)
+			retsize++;
+		else
+			break;
+	}
+	
+	int[][] ret = new int[retsize][2];
+	
+	for (int c1=0; c1<ret.length; c1++)
+	{
+		ret[c1][0] = temp[c1][0];
+		ret[c1][1] = temp[c1][1];
+	}
+	return ret;
+	
+}
+
+static boolean checkIfCorrect(int[][] rowhints, int[][] columnhints, int[][] puzzle){
+	int checking = 0;
+	int count;
+	for(int i = 0; i < puzzle.length; i++){//Check the rows first
+		int[] currentRow = rowhints[i];
+		count = 0;
+		int previous = 1;//Empty
+		for(int j = 0; j < puzzle[i].length; j ++){
+			if(puzzle[i][j] == 0) return false;
+			if(puzzle[i][j] == 2){//new count or continuing count
+				checking++;
+			}
+			if(previous == 2 && puzzle[i][j] == 1){
+				if(checking != currentRow[count]) return false;
+				checking = 0;
+				count++;
+			}
+			previous = puzzle[i][j];
+		}
+		if(previous == 2){//Last one was full
+			if(checking != currentRow[count]) return false;
+			checking = 0;
+			count++;
+		}
+		if(count != currentRow.length){//Did not search everything
+			//6System.out.println("Got " + count + " compared to " + currentRow.length);
+			return false;
+		}
+	}
+	for(int i = 0; i < puzzle[0].length; i++){//Check the columns second
+		int[] currentCol = columnhints[i];
+		count = 0;
+		int previous = 1;//Full
+		for(int j = 0; j < puzzle.length; j ++){
+			if(puzzle[j][i] == 0) return false;
+			if(puzzle[j][i] == 2){//new count
+				checking++;
+			}
+			if(previous == 2 && puzzle[j][i] == 1){
+				if(checking != currentCol[count]) return false;
+				checking = 0;
+				count++;
+			}
+			previous = puzzle[j][i];
+		}
+		if(previous == 2){ //Last one is full
+			if(checking != currentCol[count]) return false;
+			checking = 0;
+			count++;
+		}
+		if(count != currentCol.length){//Did not search everything
+			//System.out.println("Got " + count + " compared to " + currentCol.length);
+			return false;
+		}
+	}
+	return true;
+}
+
+static int[] returnZeros(int[][] puzzle){
+	int count = 0;
+	for(int i = 0; i < puzzle.length; i++){
+		for(int j = 0; j < puzzle[0].length; j++){
+			if(puzzle[i][j] == 0) count++;
+		}
+	}
+	int[] ret = new int[count];
+	count = 0;
+	for(int i = 0; i < puzzle.length; i++){
+		for(int j = 0; j < puzzle[0].length; j++){
+			if(puzzle[i][j] == 0){
+				ret[count] = i * puzzle[0].length + j;
+				count++;
+			}
+		}
+	}
+	return ret;
+}
+
+static void randomlyGuess(int[][] puzzle, int[] replace){
+	for(int i = 0; i < replace.length; i++){
+		int x = replace[i] % puzzle.length;
+		int y = replace[i] / puzzle.length;
+		if(Math.random() < 0.5){
+			puzzle[x][y] = 1;
+		}
+		else{
+			puzzle[x][y] = 2;
+		}
+	}
+}
+
+static int[][] fillCounter(boolean solvingrow, int numnth, int[][] rowhints, int[][] columhints, int[][] puzzle)
+{
+	//count the starting position and number of consecutive chunks that is filled
+	//ret[][0] is the starting position of the chunk, starting from 0
+	//ret[][1] is the size of the chunk
+
+	int maxsize = 0;
+	int numtile = 0;
+	
+	if (solvingrow)
+		numtile = columnsize;
+	else
+		numtile = rowsize;
+	
+	if (numtile%2 == 0)
+		maxsize = numtile/2;
+	else
+		maxsize = (numtile+1)/2;
+	
+	int[][] temp = new int[maxsize][2];
+	
+	int i1=0;
+	int i2=0;
+	
+	boolean chunkstart = true;	//is this the first tile of the chunk?
+	boolean wasfilled = false; //was the previous tile filled? consider -1th imaginary tile as blank
+	int count = 0;	//size of the chunk
+	int chunknum = 0;	//index of the chunk
+	
+	if (solvingrow)
+		i1 = numnth;
+	else
+		i2 = numnth;
+		
+	for (int c1=0; c1<numtile; c1++)
+	{
+		
+		if (puzzle[i1][i2] == 2)	//if the tile is filled, increase count
+		{
+			count++;
+			
+			if (chunkstart)	//if this is the first tile of the chunk, register its position
+			{
+				temp[chunknum][0] = c1;
+				chunkstart = false;
+				wasfilled = true;
+			}
+		}
+		else	//if the tile is not filled, reset parameters
+		{	
+			if (wasfilled)	//if this is the first non-filled encountered, register the size of the chunk
+			{
+				temp[chunknum][1] = count;
+				chunknum++;
+			}
+
+			count = 0;
+			chunkstart = true;
+			wasfilled = false;
+		}
+		
+		if (c1 == numtile-1)	//pack up if this is the last tile
+			temp[chunknum][1] = count;
+		
+		if(solvingrow)	//moving on to the next tile
+			i2++;
+		else
+			i1++;
+	}
+	
+	
+
+	//copy temp into ret that has proper length
+	int retsize = 0;
+	
+	for (int c1=0; c1<temp.length; c1++)
+	{
+		if (temp[c1][1] != 0)
+			retsize++;
+		else
+			break;
+	}
+	
+	int[][] ret = new int[retsize][2];
+	
+	for (int c1=0; c1<ret.length; c1++)
+	{
+		ret[c1][0] = temp[c1][0];
+		ret[c1][1] = temp[c1][1];
+		//System.out.println(ret[c1][0] + " " + ret[c1][1]);
+	}
+	return ret;
+	
+}
+
+static void griddleprint(int[][] puzzle){
+	for(int i = 0; i < puzzle.length; i++){
+		for(int j = 0; j < puzzle[0].length; j++){
+			if(puzzle[i][j] == 0) System.out.print(" .");
+			if(puzzle[i][j] == 1) System.out.print(" □");
+			if(puzzle[i][j] == 2) System.out.print(" ■");
+		}
+		System.out.println();
+	}
+}
+
+static boolean griddlecheck(int[][] puzzle)
+{
+	//have we completed the puzzle?
+	
+	for (int c1=0; c1<rowsize; c1++)
+	{
+		for (int c2=0; c2<columnsize; c2++)
+		{
+			if (puzzle[c1][c2] == 0)
+					return false;
+		}
+	}
+	
+	return true;
+}
+
+}
